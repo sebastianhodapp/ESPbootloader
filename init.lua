@@ -5,25 +5,20 @@
 ssid = "ESP8266"
 psw  = "espconfig"
 
-if pcall(function () 
-	dofile("config.lc")
-end) then
-	print("Connecting to WIFI...")
-	
-	wifi.setmode(wifi.STATION)
-	wifi.sta.config(ssid,password)
-	wifi.sta.connect()
+countdown = 5
 
-	tmr.alarm(1, 1000, 1, function() 
-		if wifi.sta.getip() == nil then
-			print("IP unavaiable, waiting.") 
-		else 
-			tmr.stop(1)
-			print("Connected, IP is "..wifi.sta.getip())
-			dofile("run_program.lua")
-		end 
-	end)
-else
-	print("Enter configuration mode")
-	dofile("run_config.lua")
-end
+tmr.alarm(0,1000,1,function()
+     print(countdown)
+     countdown = countdown -1 
+     if (countdown == 0) then
+          tmr.stop(0)
+          if pcall(function () 
+          	dofile("config.lc")
+          end) then
+               dofile("run_program.lua")
+          else
+          	print("Enter configuration mode")
+          	dofile("run_config.lua")
+          end
+     end
+end)

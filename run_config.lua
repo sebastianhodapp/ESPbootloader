@@ -8,7 +8,7 @@ wifi.sta.getap(function(t)
 			ap = trim(ap)
 			available_aps = available_aps .. "<option value='".. ap .."'>".. ap .."</option>"
 		end 
-		setup_server(available_aps)
+          setup_server(available_aps)
 	end
 end)
 
@@ -16,8 +16,8 @@ function setup_server(aps)
 	print("Setting up Wifi AP")
 	wifi.setmode(wifi.SOFTAP)
 	cfg={}
-	cfg.ssid = ssid
-	cfg.pwd  = psw
+	cfg.ssid = "ESP8266config"
+	cfg.pwd  = ""
 	wifi.ap.config(cfg)
 
 	print("Setting up webserver")
@@ -42,6 +42,7 @@ function setup_server(aps)
         		file.open("config.lua", "w")
 				file.writeline('ssid = "' .. _GET.ap .. '"')
 				file.writeline('password = "' .. _GET.psw .. '"')
+                    file.writeline('thingspeak_apikey = "' .._GET.apikey ..'"')
     			file.close()
     			node.compile("config.lua")
     			file.remove("config.lua")
@@ -51,13 +52,20 @@ function setup_server(aps)
     
         	buf = "<html><body>"
         	buf = buf .. "<form method='get' action='http://" .. wifi.ap.getip() .."'>"
-	      	buf = buf .. "Select access point: <select name='ap'>" .. aps .. "</select><br>"
+               buf = buf .. "ThingSpeak API Key: <input type='text' name='apikey'></input><br><br>"
+               buf = buf .. "Select access point: <select name='ap'>" .. aps .. "</select><br>"
 	      	buf = buf .. "Enter password: <input type='password' name='psw'></input><br><br><button type='submit'>Save</button></form>"
 	      	buf = buf .. "</body></html>" 
-    	    client:send(buf);
+          payloadLen = string.len(buf)
+          client:send("HTTP/1.1 200 OK\r\n")
+          client:send("Content-Type    text/html; charset=UTF-8\r\n")
+            
+          client:send("Content-Length:" .. tostring(payloadLen) .. "\r\n")
+          client:send("Connection:close\r\n\r\n")               
+    	     client:send(buf);
         	client:close();
-	        collectgarbage();
-    	end)
+	     collectgarbage();
+          end)
 	end)
 	print("Setting up Webserver done. Please connect to: " .. wifi.ap.getip())
 end

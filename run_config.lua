@@ -1,13 +1,26 @@
+
 -- GPIO0 resets the module
 gpio.mode(3, gpio.INT)
 gpio.trig(3,"both",function()
           node.restart()
      end)
-
+-- read previous config
 if file.open("config.lc") then
      file.close("config.lc")
      dofile("config.lc")
 end
+
+-- function to interpret variables in strings
+-- ssid="WLAN01"
+-- str="my ssid is ${ssid}"
+-- interp(str) -> "my ssid is WLAN01"
+function interp(s)
+  return (s:gsub('($%b{})', function(w) 
+          return _G[w:sub(3, -2)] or "" 
+     end))
+end
+
+
 print("Get available APs")
 wifi.setmode(wifi.STATION) 
 wifi.sta.getap(function(t)
@@ -23,16 +36,18 @@ wifi.sta.getap(function(t)
 	end
 end)
 
+
+
 function setup_server(aps)
 	print("Setting up Wifi AP")
-	wifi.setmode(wifi.SOFTAP)
-	cfg={}
-	cfg.ssid = "ESP8266config"
+     wifi.setmode(wifi.SOFTAP)
+	local cfg={}
+	cfg.ssid = "ESPconfig"
 	cfg.pwd  = ""
 	wifi.ap.config(cfg)
 
 	print("Setting up webserver")
-	srv = nil
+	local srv = nil
 	srv=net.createServer(net.TCP)
 	srv:listen(80,function(conn)
     	conn:on("receive", function(client,request)
@@ -65,18 +80,13 @@ function setup_server(aps)
 				node.restart();
         	end
     
-        	buf = "<html><body>"
-        	buf = buf .. "<form method='get' action='http://" .. wifi.ap.getip() .."'>"
-          buf = buf .. "Select access point: <select name='ssid'>" .. aps .. "</select><br>"
-          buf = buf .. "(or type hidden ssid): <input name='hiddenssid'></input><br>"
-          buf = buf .. "Enter password: <input type='password' name='password'></input><br><br>"
-          -- add custom variables to the form in a .html file
-          if (file.open('configvars.html','r')) then
-               buf = buf .. file.read()
+          if (file.open('configform.html','r')) then
+               -- make aps variable global to use in interp
+               _G.aps=aps
+               buf = interp(file.read())
                file.close()
           end
-	     buf = buf .. "<button type='submit'>Save</button></form></body></html>" 
-        
+	     
           payloadLen = string.len(buf)
           client:send("HTTP/1.1 200 OK\r\n")
           client:send("Content-Type    text/html; charset=UTF-8\r\n")

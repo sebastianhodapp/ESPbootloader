@@ -1,9 +1,6 @@
 -- Copyright (c) 2015 Sebastian Hodapp
 -- https://github.com/sebastianhodapp/ESPbootloader
 
--- Change ssid and password of AP in configuration mode 
-ssid = "ESP8266"
-psw  = "espconfig"
 
 -- If GPIO0 changes during the countdown, launch config
 gpio.mode(3, gpio.INT)
@@ -12,7 +9,7 @@ gpio.trig(3,"both",function()
           dofile("run_config.lua")
      end)
      
-countdown = 5
+local countdown = 5
 
 tmr.alarm(0,1000,1,function()
      print(countdown)

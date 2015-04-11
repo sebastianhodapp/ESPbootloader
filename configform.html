@@ -1,0 +1,11 @@
+<html><body>
+<form method='get' action='/'>
+Select access point: <select name='ssid'>${aps}</select><br>
+(or type hidden ssid): <input name='hiddenssid' value='${ssid}'/><br>
+Enter password: <input type='password' name='password'></input><br><br>
+
+MQTT Server: <input name='mqtt_server' value='${mqtt_server}'/><br>
+MQTT User  : <input name='mqtt_user' value='${mqtt_user}'/><br>
+MQTT Passwd: <input name='mqtt_passwd' value='${mqtt_passwd}'/><br>
+
+<button type='submit'>Save</button></form></body></html>

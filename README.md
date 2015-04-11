@@ -4,7 +4,7 @@ Bootloader for ESP8266 modules flashed with NodeMCU for simple wifi configuratio
 <img width='300' src='http://www.sebastian-hodapp.de/wp-content/uploads/images/espbootloader-comfortable-wifi-configuration/github_espbootloader.jpg'>
 
 # How does it work?
-The script checks whether there is already a wifi configured. If not, the configuration mode is started. You can force to boot in config mode even when there is a config file, by connecting GPIO3 to ground during the 5 seconds countdown at init.
+The script checks whether there is already a wifi configured. If not, the configuration mode is started. You can force to boot in config mode even when there is a config file, by connecting GPIO0 to ground anytime in the 5 seconds countdown at init.
 
 The ESP8266 provides an access point and webpage listing all available access points plus possibility to enter the wifi password and any other configuration parameters.
 

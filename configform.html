@@ -1,12 +1,16 @@
 <html><body>
 <form method='get' action='/'>
-Select access point: <select name='ssid'>${aps}</select><br>
-(or type hidden ssid): <input name='hiddenssid' value='${ssid}'/><br>
-Enter password: <input type='password' name='password'></input><br><br>
+<table border='0'>
+<tr><td>Select access point: </td><td><select name='ssid'>${available_aps}</select></td></tr>
+<tr><td>(or type hidden ssid): </td><td><input name='hiddenssid' value='${ssid}'/></td></tr>
+<tr><td>Enter password: </td><td><input type='password' name='password'></input></td></tr>
 
-<!--sample configuration parameters-->
-MQTT Server: <input name='mqtt_server' value='${mqtt_server}'/><br>
-MQTT User  : <input name='mqtt_user' value='${mqtt_user}'/><br>
-MQTT Passwd: <input name='mqtt_passwd' value='${mqtt_passwd}'/><br>
+<!-- sample variables -->
+<tr><td>MQTT Server:</td><td> <input name='mqtt_server' value='${mqtt_server}'/></td></tr>
+<tr><td>MQTT User  :</td><td> <input name='mqtt_user' value='${mqtt_user}'/></td></tr>
+<tr><td>MQTT Passwd:</td><td> <input name='mqtt_passwd' value='${mqtt_passwd}'/></td></tr>
+<tr><td>MQTT Device ID:</td><td> <input name='mqtt_deviceid' value='${mqtt_deviceid}'/></td></tr>
 
-<button type='submit'>Save</button></form></body></html>
+<tr><td colspan=2><button type='submit'>Save</button></td></tr></table>
+
+</form></body></html>

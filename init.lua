@@ -2,7 +2,7 @@
 -- https://github.com/sebastianhodapp/ESPbootloader
 
 -- Change ssid and password of AP in configuration mode 
-ssid = "ESP8266"
+ssid = "ESP" ..node.chipid()
 psw  = "espconfig"
 
 if pcall(function () 
@@ -16,7 +16,7 @@ end) then
 
 	tmr.alarm(1, 1000, 1, function() 
 		if wifi.sta.getip() == nil then
-			print("IP unavaiable, waiting.") 
+			print("IP unavailable, waiting.") 
 		else 
 			tmr.stop(1)
 			print("Connected, IP is "..wifi.sta.getip())

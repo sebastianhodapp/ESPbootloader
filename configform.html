@@ -1,0 +1,16 @@
+<html><body>
+<form method='get' action='/'>
+<table border='0'>
+<tr><td>Select access point: </td><td><select name='ssid'>${available_aps}</select></td></tr>
+<tr><td>(or type hidden ssid): </td><td><input name='hiddenssid' value='${ssid}'/></td></tr>
+<tr><td>Enter password: </td><td><input type='password' name='password'></input></td></tr>
+
+<!-- sample variables -->
+<tr><td>MQTT Server:</td><td> <input name='mqtt_server' value='${mqtt_server}'/></td></tr>
+<tr><td>MQTT User  :</td><td> <input name='mqtt_user' value='${mqtt_user}'/></td></tr>
+<tr><td>MQTT Passwd:</td><td> <input name='mqtt_passwd' value='${mqtt_passwd}'/></td></tr>
+<tr><td>MQTT Device ID:</td><td> <input name='mqtt_deviceid' value='${mqtt_deviceid}'/></td></tr>
+
+<tr><td colspan=2><button type='submit'>Save</button></td></tr></table>
+
+</form></body></html>

@@ -24,10 +24,6 @@ local countdown = 5
 			dofile("run_program.lua")
 		end 
 	end)
-else
-	print("Enter configuration mode")
-	dofile("run_config.lua")
-end
 
 tmr.alarm(0,1000,1,function()
      print(countdown)

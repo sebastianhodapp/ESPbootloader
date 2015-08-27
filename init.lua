@@ -1,6 +1,9 @@
 -- Copyright (c) 2015 Sebastian Hodapp
 -- https://github.com/sebastianhodapp/ESPbootloader
 
+-- Improved by Simonarde Jr.
+-- https://github.com/simonardejr/ESPbootloader
+
 
 -- Change ssid and password of AP in configuration mode 
 ssid = "ESP" ..node.chipid()
@@ -15,19 +18,15 @@ gpio.trig(3,"both",function()
      
 local countdown = 5
 
-	tmr.alarm(1, 1000, 1, function() 
-		if wifi.sta.getip() == nil then
-			print("IP unavailable, waiting.") 
-		else 
-			tmr.stop(1)
-			print("Connected, IP is "..wifi.sta.getip())
-			dofile("run_program.lua")
-		end 
-	end)
-else
-	print("Enter configuration mode")
-	dofile("run_config.lua")
-end
+tmr.alarm(1, 5000, 1, function() 
+	if wifi.sta.getip() == nil then
+		print("IP unavailable, waiting.") 
+	else 
+		tmr.stop(1)
+		print("Connected, IP is "..wifi.sta.getip())
+		dofile("run_program.lua")
+	end 
+end)
 
 tmr.alarm(0,1000,1,function()
      print(countdown)
@@ -45,4 +44,3 @@ tmr.alarm(0,1000,1,function()
           end
      end
 end)
-

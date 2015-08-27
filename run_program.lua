@@ -8,4 +8,8 @@ wifi.sta.connect()
 ssid=nil
 password=nil
 
-dofile("mqtt-client.lc")
+-- check if mqtt-client.lc exists before execute
+if file.open("mqtt-client.lc") then
+     file.close("mqtt-client.lc")
+     dofile("mqtt-client.lc")
+end

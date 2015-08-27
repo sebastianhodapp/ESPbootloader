@@ -58,7 +58,7 @@ function setup_server()
      wifi.setmode(wifi.SOFTAP)
 	local cfg={}
 	cfg.ssid = "ESPconfig"
-	cfg.pwd  = ""
+	cfg.pwd  = "espconfig"
 	wifi.ap.config(cfg)
 
 	print("Setting up webserver")

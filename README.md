@@ -13,7 +13,8 @@ These settings are stored persistently in the file *config.lc* and the module co
 # How to use it
 * Modify the *configform.html* file to include any configuration parameters that you need in your scripts.
 * Add your normal program routines to file *run_program.lua*
-* Upload all files to your ESP8266 module
+* Use Makefile to upload all files to your ESP8266 module
+* For help, run `make help`
 
 # License
 Copyright (c) 2015 [Sebastian Hodapp](http://www.sebastian-hodapp.de) Licensed under the [The MIT License (MIT)](http://opensource.org/licenses/MIT).

@@ -12,9 +12,9 @@ psw  = "espconfig"
 -- If GPIO0 changes during the countdown, launch config
 gpio.mode(3, gpio.INT)
 gpio.trig(3,"both",function()
-          tmr.stop(0)
-          dofile("run_config.lua")
-     end)
+     tmr.stop(0)
+     dofile("run_config.lua")
+end)
      
 local countdown = 5
 
